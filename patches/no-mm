@@ -1,0 +1,499 @@
+GtkSourceView sans MM
+
+Description: <short summary of the patch>
+ TODO: Put a short summary on the line above and replace this paragraph
+ with a longer explanation of this change. Complete the meta-information
+ with other relevant fields (see below for details). To make it easier, the
+ information below has been extracted from the changelog. Adjust it or drop
+ it.
+ .
+ vle (1.1-1) lucid; urgency=low
+ .
+   * Ubuntu version (same as Debian)
+Author: Gauthier Quesnel <quesnel@users.sourceforge.net>
+
+---
+The information above should follow the Patch Tagging Guidelines, please
+checkout http://dep.debian.net/deps/dep3/ to learn about the format. Here
+are templates for supplementary fields that you might want to add:
+
+Origin: <vendor|upstream|other>, <url of original patch>
+Bug: <url in upstream bugtracker>
+Bug-Debian: http://bugs.debian.org/<bugnumber>
+Bug-Ubuntu: https://launchpad.net/bugs/<bugnumber>
+Forwarded: <no|not-needed|url proving that it has been forwarded>
+Reviewed-By: <name and email of someone who approved the patch>
+Last-Update: <YYYY-MM-DD>
+
+--- vle-1.1.orig/CMakeLists.txt
++++ vle-1.1/CMakeLists.txt
+@@ -82,11 +82,11 @@ endif (COMMAND CMAKE_POLICY)
+ 
+ option(WITH_CAIRO "use cairomm to build output plugin [default: on]" ON)
+ option(WITH_GTK "use gtkmm to build gvle [default: on]" ON)
+-option(WITH_GTKSOURCEVIEW "use gtksourcevieww to build gvle [default: on]" ON)
++option(WITH_GTKSOURCEVIEW "use gtksourceview to build gvle [default: on]" ON)
+ 
+ if (WITH_CAIRO AND WITH_GTK AND WITH_GTKSOURCEVIEW)
+   pkg_check_modules(VLEDEPS libarchive glibmm-2.4 gthread-2.0 libxml-2.0
+-    cairomm-1.0>=1.2 gtkmm-2.4 gtksourceviewmm-2.0)
++    cairomm-1.0>=1.2 gtkmm-2.4 gtksourceview-2.0)
+ elseif (WITH_CAIRO AND WITH_GTK)
+   pkg_check_modules(VLEDEPS libarchive glibmm-2.4 gthread-2.0 libxml-2.0
+     cairomm-1.0>=1.2 gtkmm-2.4)
+@@ -97,9 +97,9 @@ else ()
+   pkg_check_modules(VLEDEPS libarchive glibmm-2.4 gthread-2.0 libxml-2.0)
+ endif()
+ 
+-#if (NOT VLEDEPS_FOUND)
+-  #message(FATAL_ERROR "Missing dependencies")
+-#endif ()
++if (NOT VLEDEPS_FOUND)
++  message(FATAL_ERROR "Missing dependencies")
++endif ()
+ 
+ if (WITH_CAIRO)
+     set(VLE_HAVE_CAIRO 1 CACHE INTERNAL "" FORCE)
+@@ -110,7 +110,7 @@ if (WITH_GTK)
+ endif ()
+ 
+ if (WITH_GTKSOURCEVIEW)
+-  set(VLE_HAVE_GTKSOURCEVIEWMM 1 CACHE INTERNAL "" FORCE)
++  set(VLE_HAVE_GTKSOURCEVIEW 1 CACHE INTERNAL "" FORCE)
+ endif ()
+ 
+ #
+@@ -283,12 +283,12 @@ message(STATUS "- - - -")
+ message(STATUS "${VLE_NAME_COMPLETE} configured successfully")
+ message(STATUS "Using ${CMAKE_INSTALL_PREFIX} for installation")
+ message(STATUS "Build type ${CMAKE_BUILD_TYPE}")
+-message(STATUS "Build with GCC ABI Demangle...: ${VLE_HAVE_GCC_ABI_DEMANGLE}")
+-message(STATUS "Build with execinfo.h.........: ${VLE_HAVE_EXECINFO}")
+-message(STATUS "Build unit test...............: ${VLE_HAVE_UNITTESTFRAMEWORK}")
+-message(STATUS "Build with cairo plugin.......: ${VLE_HAVE_CAIRO}")
+-message(STATUS "Build with gvle...............: ${VLE_HAVE_GVLE}")
+-message(STATUS "Build with gtksourceviewmm....: ${VLE_HAVE_GTKSOURCEVIEWMM}")
+-message(STATUS "Build with MPI................: ${VLE_HAVE_MPI}")
++message(STATUS "Build with GCC ABI Demangle....................: ${VLE_HAVE_GCC_ABI_DEMANGLE}")
++message(STATUS "Build with execinfo.h..........................: ${VLE_HAVE_EXECINFO}")
++message(STATUS "Build unit test................................: ${VLE_HAVE_UNITTESTFRAMEWORK}")
++message(STATUS "Build with cairo plugin........................: ${VLE_HAVE_CAIRO}")
++message(STATUS "Build with gvle................................: ${VLE_HAVE_GVLE}")
++message(STATUS "Build with gtksourceview.......................: ${VLE_HAVE_GTKSOURCEVIEW}")
++message(STATUS "Build with MPI.................................: ${VLE_HAVE_MPI}")
+ 
+ # vim:tw=0:ts=8:tw=0:sw=2:sts=2
+--- vle-1.1.orig/src/vle/version.hpp.in
++++ vle-1.1/src/vle/version.hpp.in
+@@ -58,7 +58,7 @@
+ #cmakedefine VLE_HAVE_CAIRO
+ #cmakedefine VLE_HAVE_POOL
+ #cmakedefine VLE_HAVE_NLS
+-#cmakedefine VLE_HAVE_GTKSOURCEVIEWMM
++#cmakedefine VLE_HAVE_GTKSOURCEVIEW
+ #cmakedefine VLE_HAVE_BOOST_SPIRIT2
+ #cmakedefine VLE_HAVE_MPI
+ 
+--- vle-1.1.orig/src/vle/gvle/Editor.cpp
++++ vle-1.1/src/vle/gvle/Editor.cpp
+@@ -35,13 +35,42 @@
+ #include <vle/utils/Exception.hpp>
+ #include <vle/utils/Path.hpp>
+ #include <gtkmm/stock.h>
+-#ifdef VLE_HAVE_GTKSOURCEVIEWMM
++#ifdef VLE_HAVE_GTKSOURCEVIEW
+ #include <gtkmm/clipboard.h>
+ #endif
+ #include <gdkmm/cursor.h>
+ #include <boost/lexical_cast.hpp>
+ #include <fstream>
+ 
++#ifdef VLE_HAVE_GTKSOURCEVIEW
++
++void gvle_gtksourceview_init() {
++  static bool s_init = false ;
++    if (!s_init) {
++        Glib::init () ;
++
++	// no other ??? 
++
++        s_init = true ;
++    }
++}
++
++SourceView::SourceView() :
++    // Mark this class as non-derived to allow C++ vfuncs to be skipped.
++  Glib::ObjectBase(0),
++  Gtk::TextView()
++{
++    GtkSourceBuffer *buffer = gtk_source_buffer_new (NULL) ;
++    gtk_text_view_set_buffer (GTK_TEXT_VIEW (gobject_), GTK_TEXT_BUFFER (buffer));
++}
++
++SourceView::~SourceView()
++{
++  destroy_();
++}
++
++#endif
++
+ 
+ namespace vle { namespace gvle {
+ 
+@@ -97,8 +126,8 @@ DocumentText::DocumentText(GVLE* gvle,
+ 
+     mIdLang = guessIdLanguage();
+ 
+-#ifdef VLE_HAVE_GTKSOURCEVIEWMM
+-    gtksourceview::init();
++#ifdef VLE_HAVE_GTKSOURCEVIEW
++    gvle_gtksourceview_init();
+ #endif
+ 
+     if (not mNew) {
+@@ -135,8 +164,8 @@ DocumentText::DocumentText(const std::st
+ {
+     mIdLang = "cpp";
+ 
+-#ifdef VLE_HAVE_GTKSOURCEVIEWMM
+-    gtksourceview::init();
++#ifdef VLE_HAVE_GTKSOURCEVIEW
++    gvle_gtksourceview_init();
+ #endif
+     init(buffer);
+ 
+@@ -187,27 +216,40 @@ void DocumentText::saveAs(const std::str
+ 
+ void DocumentText::init(const std::string& buffer)
+ {
+-#ifdef VLE_HAVE_GTKSOURCEVIEWMM
+-    Glib::RefPtr<gtksourceview::SourceLanguageManager> manager
+-	= gtksourceview::SourceLanguageManager::create();
+-    Glib::RefPtr<gtksourceview::SourceLanguage> language =
+-	manager->get_language(mIdLang);
+-    Glib::RefPtr<gtksourceview::SourceBuffer> buffer_ =
+-	gtksourceview::SourceBuffer::create(language);
++#ifdef VLE_HAVE_GTKSOURCEVIEW
++//    Glib::RefPtr<gtksourceview::SourceLanguageManager> manager
++//	= gtksourceview::SourceLanguageManager::create();
++	GtkSourceLanguageManager *manager = gtk_source_language_manager_new ();
++	
++//    Glib::RefPtr<gtksourceview::SourceLanguage> language =
++//	manager->get_language(mIdLang);
++	GtkSourceLanguage *language = gtk_source_language_manager_get_language  (manager, mIdLang.c_str());
++	
++//    Glib::RefPtr<gtksourceview::SourceBuffer> buffer_ =
++//	gtksourceview::SourceBuffer::create(language);
++	GtkSourceBuffer *buffer_ = gtk_source_buffer_new_with_language (language);
++	
+ #else
+     Glib::RefPtr<Gtk::TextBuffer> buffer_ = mView.get_buffer();
+ #endif
+ 
+-#ifdef VLE_HAVE_GTKSOURCEVIEWMM
+-    buffer_->begin_not_undoable_action();
+-    buffer_->insert(buffer_->end(), buffer);
+-    buffer_->end_not_undoable_action();
++#ifdef VLE_HAVE_GTKSOURCEVIEW
++//    buffer_->begin_not_undoable_action();
++	gtk_source_buffer_begin_not_undoable_action (buffer_);
++
++//    buffer_->insert(buffer_->end(), buffer);
++	gtk_text_buffer_insert_at_cursor (&buffer_->parent_instance, buffer.c_str (), buffer.size ());
++	
++//    buffer_->end_not_undoable_action();
++	gtk_source_buffer_end_not_undoable_action (buffer_);
+ #else
+     buffer_->insert(buffer_->end(), buffer);
+ #endif
+ 
+-#ifdef VLE_HAVE_GTKSOURCEVIEWMM
+-    mView.set_source_buffer(buffer_);
++#ifdef VLE_HAVE_GTKSOURCEVIEW
++////    mView.set_source_buffer(buffer_);
++	
++	gtk_text_view_set_buffer (&mView.gobj ()->parent, &buffer_->parent_instance);
+ #endif
+ 
+     mView.get_buffer()->signal_changed().connect(
+@@ -233,26 +275,45 @@ std::string DocumentText::guessIdLanguag
+ 
+ void DocumentText::applyEditingProperties()
+ {
+-#ifdef VLE_HAVE_GTKSOURCEVIEWMM
+-    mView.get_source_buffer()->set_highlight_syntax(
+-        Settings::settings().getHighlightSyntax());
+-    mView.get_source_buffer()->set_highlight_matching_brackets(
+-        Settings::settings().getHighlightBrackets());
+-    mView.set_highlight_current_line(
+-        Settings::settings().getHighlightLine());
+-    mView.set_show_line_numbers(
+-        Settings::settings().getLineNumbers());
+-    mView.set_show_right_margin(
+-        Settings::settings().getRightMargin());
+-    mView.set_auto_indent(
+-        Settings::settings().getAutoIndent());
+-    mView.set_indent_on_tab(
+-        Settings::settings().getIndentOnTab());
+-    mView.set_indent_width(
+-        Settings::settings().getIndentSize());
++#ifdef VLE_HAVE_GTKSOURCEVIEW
++	GtkSourceBuffer *buffer = GTK_SOURCE_BUFFER (mView.get_buffer ()->gobj ());
++	GtkSourceView   *source = GTK_SOURCE_VIEW (mView.gobj ());
++
++//    mView.get_source_buffer()->set_highlight_syntax(
++//        Settings::settings().getHighlightSyntax());
++	gtk_source_buffer_set_highlight_syntax (buffer, Settings::settings().getHighlightSyntax());
++//    mView.get_source_buffer()->set_highlight_matching_brackets(
++//        Settings::settings().getHighlightBrackets());
++	gtk_source_buffer_set_highlight_matching_brackets (buffer, Settings::settings().getHighlightBrackets());
++
++//    mView.set_highlight_current_line(
++//        Settings::settings().getHighlightLine());
++	gtk_source_view_set_highlight_current_line (source, Settings::settings().getHighlightLine());
++
++//    mView.set_show_line_numbers(
++//        Settings::settings().getLineNumbers());
++	gtk_source_view_set_show_line_numbers (source, Settings::settings().getLineNumbers());
++
++//    mView.set_show_right_margin(
++//        Settings::settings().getRightMargin());
++	gtk_source_view_set_show_right_margin (source, Settings::settings().getRightMargin());
++
++//    mView.set_auto_indent(
++//        Settings::settings().getAutoIndent());
++	gtk_source_view_set_auto_indent (source, Settings::settings().getAutoIndent());
++
++//    mView.set_indent_on_tab(
++//        Settings::settings().getIndentOnTab());
++	gtk_source_view_set_indent_on_tab (source, Settings::settings().getIndentOnTab());
++
++//    mView.set_indent_width(
++//        Settings::settings().getIndentSize());
++	gtk_source_view_set_indent_width (source, Settings::settings().getIndentSize());
++
+     if (Settings::settings().getSmartHomeEnd()) {
+-        mView.set_smart_home_end(
+-            gtksourceview::SOURCE_SMART_HOME_END_ALWAYS);
++//        mView.set_smart_home_end(
++//            gtksourceview::SOURCE_SMART_HOME_END_ALWAYS);
++		gtk_source_view_set_smart_home_end (source, GTK_SOURCE_SMART_HOME_END_ALWAYS);	
+     }
+ #endif
+ 
+@@ -269,63 +330,91 @@ void DocumentText::updateView()
+ 
+ void DocumentText::undo()
+ {
+-#ifdef VLE_HAVE_GTKSOURCEVIEWMM
+-    mView.get_source_buffer()->undo();
++#ifdef VLE_HAVE_GTKSOURCEVIEW
++//    mView.get_source_buffer()->undo();
++	gtk_source_buffer_undo (GTK_SOURCE_BUFFER (mView.get_buffer ()->gobj ()));
+ #endif
+ }
+ 
+ void DocumentText::redo()
+ {
+-#ifdef VLE_HAVE_GTKSOURCEVIEWMM
+-    mView.get_source_buffer()->redo();
++#ifdef VLE_HAVE_GTKSOURCEVIEW
++//    mView.get_source_buffer()->redo();
++	gtk_source_buffer_redo (GTK_SOURCE_BUFFER (mView.get_buffer ()->gobj ()));
+ #endif
+ }
+ 
+ void DocumentText::paste()
+ {
+-#ifdef VLE_HAVE_GTKSOURCEVIEWMM
+-    Glib::RefPtr<gtksourceview::SourceBuffer> buffer(mView.get_source_buffer());
++#ifdef VLE_HAVE_GTKSOURCEVIEW
++////    Glib::RefPtr<SourceBuffer> buffer(mView.get_source_buffer());
++	GtkTextBuffer *buffer = mView.get_buffer ()->gobj ();
++	GtkTextView   view = mView.gobj ()->parent;
+ #else
+-    Glib::RefPtr<Gtk::TextBuffer> buffer(mView.get_buffer());
++////    Glib::RefPtr<Gtk::TextBuffer> buffer(mView.get_buffer());
++	GtkTextBuffer *buffer = mView.get_buffer ()->gobj ();
++	GtkTextView   view = *(mView.gobj ());
+ #endif
+ 
+-    Glib::RefPtr<Gtk::Clipboard> clipboard(Gtk::Clipboard::get());
+-    buffer->paste_clipboard(clipboard, true);
+-    mView.scroll_to_mark(buffer->get_insert(), 0.02);
++////    Glib::RefPtr<Gtk::Clipboard> clipboard(Gtk::Clipboard::get());
++	GtkClipboard *clipboard = gtk_clipboard_get (GDK_SELECTION_CLIPBOARD);
++
++////    buffer->paste_clipboard(clipboard, true);
++	gtk_text_buffer_paste_clipboard	(buffer, clipboard, NULL, true);
++
++////    mView.scroll_to_mark(buffer->get_insert(), 0.02);
++	gtk_text_view_scroll_to_mark (&view, gtk_text_buffer_get_insert(buffer), 0.02, true, 0, 0);
+ }
+ 
+ void DocumentText::copy()
+ {
+-#ifdef VLE_HAVE_GTKSOURCEVIEWMM
+-    Glib::RefPtr<gtksourceview::SourceBuffer> buffer(mView.get_source_buffer());
++#ifdef VLE_HAVE_GTKSOURCEVIEW
++////    Glib::RefPtr<gtksourceview::SourceBuffer> buffer(mView.get_source_buffer());
++	GtkTextBuffer *buffer = mView.get_buffer ()->gobj ();
+ #else
+-    Glib::RefPtr<Gtk::TextBuffer> buffer(mView.get_buffer());
++////    Glib::RefPtr<Gtk::TextBuffer> buffer(mView.get_buffer());
++	GtkTextBuffer *buffer = mView.get_buffer ()->gobj ();
+ #endif
+ 
+-    Glib::RefPtr<Gtk::Clipboard> clipboard(Gtk::Clipboard::get());
+-    buffer->copy_clipboard(clipboard);
++////    Glib::RefPtr<Gtk::Clipboard> clipboard(Gtk::Clipboard::get());
++	GtkClipboard *clipboard = gtk_clipboard_get (GDK_SELECTION_CLIPBOARD);
++	
++////    buffer->copy_clipboard(clipboard);
++	gtk_text_buffer_copy_clipboard (buffer, clipboard);
+ }
+ 
+ void DocumentText::cut()
+ {
+-#ifdef VLE_HAVE_GTKSOURCEVIEWMM
+-    Glib::RefPtr<gtksourceview::SourceBuffer> buffer(mView.get_source_buffer());
++#ifdef VLE_HAVE_GTKSOURCEVIEW
++////    Glib::RefPtr<gtksourceview::SourceBuffer> buffer(mView.get_source_buffer());
++	GtkTextBuffer *buffer = mView.get_buffer ()->gobj ();
+ #else
+-    Glib::RefPtr<Gtk::TextBuffer> buffer(mView.get_buffer());
++////    Glib::RefPtr<Gtk::TextBuffer> buffer(mView.get_buffer());
++	GtkTextBuffer *buffer = mView.get_buffer ()->gobj ();
+ #endif
+ 
+-    Glib::RefPtr<Gtk::Clipboard> clipboard(Gtk::Clipboard::get());
+-    buffer->cut_clipboard(clipboard);
++////    Glib::RefPtr<Gtk::Clipboard> clipboard(Gtk::Clipboard::get());
++	GtkClipboard *clipboard = gtk_clipboard_get (GDK_SELECTION_CLIPBOARD);
++	
++////    buffer->cut_clipboard(clipboard);
++	gtk_text_buffer_cut_clipboard (buffer, clipboard, true);
+ }
+ 
+ void DocumentText::selectAll()
+ {
+-#ifdef VLE_HAVE_GTKSOURCEVIEWMM
+-    Glib::RefPtr<gtksourceview::SourceBuffer> buffer(mView.get_source_buffer());
++#ifdef VLE_HAVE_GTKSOURCEVIEW
++////    Glib::RefPtr<gtksourceview::SourceBuffer> buffer(mView.get_source_buffer());
++	GtkTextBuffer *buffer = mView.get_buffer ()->gobj ();
+ #else
+-    Glib::RefPtr<Gtk::TextBuffer> buffer(mView.get_buffer());
++////    Glib::RefPtr<Gtk::TextBuffer> buffer(mView.get_buffer());
++	GtkTextBuffer *buffer = mView.get_buffer ()->gobj ();
+ #endif
+-    buffer->select_range(buffer->begin(), buffer->end());
++////    buffer->select_range(buffer->begin(), buffer->end());
++	GtkTextIter start, end;
++	gtk_text_buffer_get_start_iter (buffer, &start);
++	gtk_text_buffer_get_end_iter(buffer, &end);
++
++	gtk_text_buffer_select_range (buffer, &start, &end);
+ }
+ 
+ void DocumentText::onChanged()
+@@ -346,8 +435,14 @@ void DocumentText::onChanged()
+ 
+ std::string DocumentText::getBuffer()
+ {
+-#ifdef VLE_HAVE_GTKSOURCEVIEWMM
+-    return mView.get_source_buffer()->get_text();
++#ifdef VLE_HAVE_GTKSOURCEVIEW
++////    return mView.get_source_buffer()->get_text();
++	GtkTextBuffer *buffer = mView.get_buffer ()->gobj ();
++	
++	GtkTextIter start, end;
++	gtk_text_buffer_get_selection_bounds (buffer, &start, &end);
++	
++	return gtk_text_buffer_get_text (buffer, &start, &end, true);
+ #else
+     return mView.get_buffer()->get_text();
+ #endif
+--- vle-1.1.orig/src/vle/gvle/CMakeLists.txt
++++ vle-1.1/src/vle/gvle/CMakeLists.txt
+@@ -35,7 +35,6 @@ set(GVLE_SOURCES_HPP About.hpp AtomicMod
+   View.hpp ViewOutputBox.hpp XmlTypeBox.hpp SpawnPool.hpp)
+ 
+ install(FILES ${GVLE_SOURCES_HPP} DESTINATION ${VLE_INCLUDE_DIRS}/gvle)
+-
+ install(FILES gvle.glade DESTINATION ${VLE_SHARE_DIRS}/glade)
+ 
+ if (WIN32)
+--- vle-1.1.orig/src/vle/gvle/Editor.hpp
++++ vle-1.1/src/vle/gvle/Editor.hpp
+@@ -40,10 +40,47 @@
+ #include <gtkmm/notebook.h>
+ #include <gtkmm/builder.h>
+ 
+-#ifdef VLE_HAVE_GTKSOURCEVIEWMM
+-#include <gtksourceviewmm-2.0/gtksourceviewmm.h>
++#ifdef VLE_HAVE_GTKSOURCEVIEW
++#include <gtksourceview/gtksourceview.h>
++#include <gtksourceview/gtksourcelanguagemanager.h>
+ #endif
+ 
++
++/* Ajout tentative init OK
++
++*/
++
++#include <glibmm.h>
++#include <gtkmm/private/textview_p.h>
++
++
++#ifdef VLE_HAVE_GTKSOURCEVIEW
++class SourceView;
++
++class SourceView : public Gtk::TextView
++{
++  public:
++      virtual ~SourceView();
++    #ifndef DOXYGEN_SHOULD_SKIP_THIS
++      static GType get_type()      G_GNUC_CONST;
++      static GType get_base_type() G_GNUC_CONST;
++    #endif
++    
++    ///Provides access to the underlying C GtkObject.
++    GtkSourceView*       gobj()       { return reinterpret_cast<GtkSourceView*>(gobject_); }
++    
++    ///Provides access to the underlying C GtkObject.
++    const GtkSourceView* gobj() const { return reinterpret_cast<GtkSourceView*>(gobject_); }
++  public:
++    explicit SourceView () ;   
++};
++
++#endif
++
++/* Fin Ajout
++*/
++
++
+ namespace vle { namespace gvle {
+ 
+ class GVLE;
+@@ -135,8 +172,8 @@ public:
+     std::string getBuffer();
+ 
+ private:
+-#ifdef VLE_HAVE_GTKSOURCEVIEWMM
+-    gtksourceview::SourceView mView;
++#ifdef VLE_HAVE_GTKSOURCEVIEW
++    SourceView mView;
+ #else
+     Gtk::TextView  mView;
+ #endif
+--- vle-1.1.orig/src/vle/gvle/gvle.glade
++++ vle-1.1/src/vle/gvle/gvle.glade
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <interface>
+-  <requires lib="gtk+" version="2.24"/>
++  <requires lib="gtk+" version="2.20"/>
+   <!-- interface-naming-policy toplevel-contextual -->
+   <object class="GtkAboutDialog" id="DialogAbout">
+     <property name="can_focus">False</property>

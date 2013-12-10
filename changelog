@@ -1,0 +1,11 @@
+vle (1.1-1) lucid; urgency=low
+
+  * Ubuntu version (same as Debian)
+
+ -- Gauthier Quesnel <quesnel@users.sourceforge.net>  Mon, 15 Apr 2013 14:12:57 +0200
+
+vle (1.1-0) stable; urgency=low
+
+  * Initial release (Closes: #9999)
+
+ -- Gauthier Quesnel <quesnel@users.sourceforge.net>  Mon, 15 Apr 2013 14:12:56 +0200

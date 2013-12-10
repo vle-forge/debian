@@ -1,0 +1,47 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Sample debian/rules that uses debhelper.
+#
+# This file was originally written by Joey Hess and Craig Small.
+# As a special exception, when this file is copied by dh-make into a
+# dh-make output file, you may use that output file without restriction.
+# This special exception was added by Craig Small in version 0.37 of dh-make.
+#
+# Modified to make a template file for a multi-binary package with separated
+# build-arch and build-indep targets  by Bill Allombert 2001
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+
+export DEB_BUILD_HARDENING := 1
+
+include /usr/share/quilt/quilt.make
+
+export CFLAGS := $(shell dpkg-buildflags --get CFLAGS) $(shell dpkg-buildflags --get CPPFLAGS)
+export CXXFLAGS := $(shell dpkg-buildflags --get CXXFLAGS) $(shell dpkg-buildflags --get CPPFLAGS)
+export LDFLAGS := $(shell dpkg-buildflags --get LDFLAGS) $(shell dpkg-buildflags --get CPPFLAGS)
+export CPPFLAGS := $(shell dpkg-buildflags --get CPPFLAGS)
+
+override_dh_install:
+	gzip -9 debian/tmp/usr/share/man/man1/vle-1.1.1
+	gzip -9 debian/tmp/usr/share/man/man1/gvle-1.1.1
+	gzip -9 debian/tmp/usr/share/man/man1/mvle-1.1.1
+	cp debian/tmp/usr/share/man/man1/vle-1.1.1.gz debian/tmp/usr/share/man/man1/vle.1.gz
+	cp debian/tmp/usr/share/man/man1/gvle-1.1.1.gz debian/tmp/usr/share/man/man1/gvle.1.gz
+	cp debian/tmp/usr/share/man/man1/mvle-1.1.1.gz debian/tmp/usr/share/man/man1/mvle.1.gz
+	dh_install --list-missing -O--parallel
+
+override_dh_gencontrol:
+	dh_gencontrol -O--parallel	
+
+override_dh_auto_test:
+
+override_dh_auto_configure:	
+	dh_auto_configure -- -DWITH_GTKSOURCEVIEW=ON -DWITH_GTK=ON -DWITH_CAIRO=ON -DWITH_MPI=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=/usr \
+		-DWITH_DOXYGEN=OFF ..	
+
+
+%:
+	dh $@ --parallel

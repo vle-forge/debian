@@ -1,0 +1,10 @@
+debian/tmp/usr/lib/libvle-1.1.a
+debian/tmp/usr/lib/libvle-1.1.so
+debian/tmp/usr/include/vle-1.1/vle/value/*
+debian/tmp/usr/include/vle-1.1/vle/vpz/*
+debian/tmp/usr/include/vle-1.1/vle/oov/*
+debian/tmp/usr/include/vle-1.1/vle/devs/*
+debian/tmp/usr/include/vle-1.1/vle/utils/*
+debian/tmp/usr/include/vle-1.1/vle/manager/*
+debian/tmp/usr/include/vle-1.1/vle/translator/*
+debian/tmp/usr/include/vle-1.1/vle/*.hpp

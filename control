@@ -1,0 +1,94 @@
+Source: vle
+Section: unknown
+Priority: extra
+Maintainer: Gauthier Quesnel <quesnel@users.sourceforge.net>
+Build-Depends: debhelper (>= 8.0), cmake (>= 2.6), quilt, g++ (>= 4:3.2.2-0), devscripts, libgtkmm-2.4-dev, libglademm-2.4-dev, libboost-dev (>= 1.41), libboost-chrono-dev|libboost-dev (<< 1.49), libboost-date-time-dev, libboost-filesystem-dev, libboost-test-dev,  libboost-regex-dev, libboost-program-options-dev, libboost-thread-dev, mpi-default-dev, libgtksourceview2.0-dev, libattr1-dev, liblzma-dev, libacl1-dev, libarchive-dev, libcurl4-gnutls-dev, nettle-dev, libssl-dev, openssl
+Build-Depends-Indep: doxygen, graphviz 
+Standards-Version: 3.9.1
+Homepage: http://www.vle-project.org
+#Vcs-Git: git://git.debian.org/collab-maint/vle.git
+#Vcs-Browser: http://git.debian.org/?p=collab-maint/vle.git;a=summary
+
+Package: vle
+Section: utils
+Architecture: any
+Depends:  ${shlibs:Depends}, ${misc:Depends}, libvle-1.1-0
+Description: environment of modeling and simulation (executables files)
+ VLE is a platform of modelling and simulation for complex systems.
+ .
+ This package contains excutables files.
+
+Package: gvle
+Section: utils
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libgvle-1.1-0
+Description: environment of modeling and simulation (executables files)
+ VLE is a platform of modelling and simulation for complex systems.
+ .
+ This package contains the gvle excutables files.
+
+Package: libvle-1.1-0
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libvle-1.1-0-data, pkg-config, cmake, libxml2-dev, libglibmm-2.4-dev, gcc, g++
+Description: environment of modeling and simulation (runtimes files)
+ VLE is a platform of modelling and simulation for complex systems.
+ .
+ This package contains shared libraries.
+ 
+
+Package: libgvle-1.1-0
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libvle-1.1-0, libvle-1.1-0-data
+Description: environment of modeling and simulation (runtimes files)
+ VLE is a platform of modelling and simulation for complex systems.
+ .
+ This package contains shared libraries.
+
+Package: libvle-1.1-0-dev
+Section: libdevel
+Architecture: any
+Depends:  libvle-1.1-0 (= ${binary:Version}), libboost-dev (>= 1.41), libboost-chrono-dev|libboost-dev (<< 1.49), libboost-date-time-dev, libboost-filesystem-dev, libboost-test-dev,  libboost-regex-dev, libboost-program-options-dev, libboost-thread-dev, libboost-mpi-dev, libattr1-dev, liblzma-dev, libacl1-dev, libarchive-dev, libcurl4-gnutls-dev, nettle-dev, libssl-dev, openssl,${misc:Depends}
+Description: environment of modeling and simulation (development files)
+ VLE is a platform of modelling and simulation for complex systems
+ .
+ This package contains shared libraries.
+
+Package: libgvle-1.1-0-dev
+Section: libdevel
+Architecture: any
+Depends: libgvle-1.1-0 (= ${binary:Version}), libvle-1.1-0 (= ${binary:Version}), libgtkmm-2.4-dev, libglademm-2.4-dev, libboost-dev (>= 1.41), libboost-chrono-dev|libboost-dev (<< 1.49), libboost-date-time-dev, libboost-filesystem-dev, libboost-test-dev,  libboost-regex-dev, libboost-program-options-dev, libboost-thread-dev, libboost-mpi-dev, libattr1-dev, liblzma-dev, libacl1-dev, libarchive-dev, libcurl4-gnutls-dev, nettle-dev, libssl-dev, openssl, ${misc:Depends}
+Description: environment of modeling and simulation (development files)
+ VLE is a platform of modelling and simulation for complex systems
+ .
+ This package contains shared libraries.
+
+Package: libvle-1.1-0-doc
+Section: doc
+Architecture: all
+Depends: ${misc:Depends}
+Description: environment of modeling and simulation (development files)
+ VLE is a platform of modelling and simulation for complex systems
+ .
+ This package contains documentation of shared libraries.
+ 
+
+Package: libgvle-1.1-0-doc
+Section: doc
+Architecture: all
+Depends: ${misc:Depends}
+Description: environment of modeling and simulation (development files)
+ VLE is a platform of modelling and simulation for complex systems
+ .
+ This package contains documentation of shared libraries.
+
+Package: libvle-1.1-0-data
+Section: utils
+Architecture: all
+Depends: ${misc:Depends}
+Description: environment of modeling and simulation (runtimes files)
+ VLE is a platform of modelling and simulation for complex systems.
+ .
+ This package contains shared libraries.
+

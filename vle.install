@@ -1,0 +1,9 @@
+debian/tmp/usr/bin/vle-1.1
+debian/tmp/usr/bin/vle
+debian/tmp/usr/bin/mvle-1.1
+debian/tmp/usr/bin/mvle
+debian/tmp/usr/lib/pkgconfig/*
+debian/tmp/usr/share/man/man1/vle*
+debian/tmp/usr/share/man/man1/mvle*
+debian/tmp/usr/share/vle-1.1/COPYING
+debian/tmp/usr/share/vle-1.1/doc/*
