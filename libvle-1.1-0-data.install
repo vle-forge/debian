@@ -1,5 +1,5 @@
 debian/tmp/usr/share/locale/*
-debian/tmp/usr/share/vle-1.1/README
+debian/tmp/usr/share/vle-1.1/README.rst
 debian/tmp/usr/share/vle-1.1/dtd/*
 debian/tmp/usr/share/vle-1.1/template/unittest.vpz
 debian/tmp/usr/share/vle-1.1/template/package/*

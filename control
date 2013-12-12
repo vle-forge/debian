@@ -1,8 +1,8 @@
 Source: vle
-Section: unknown
-Priority: extra
+Section: misc
+Priority: optional
 Maintainer: Gauthier Quesnel <quesnel@users.sourceforge.net>
-Build-Depends: debhelper (>= 8.0), cmake (>= 2.6), quilt, g++ (>= 4:3.2.2-0), devscripts, libgtkmm-2.4-dev, libglademm-2.4-dev, libboost-dev (>= 1.41), libboost-chrono-dev|libboost-dev (<< 1.49), libboost-date-time-dev, libboost-filesystem-dev, libboost-test-dev,  libboost-regex-dev, libboost-program-options-dev, libboost-thread-dev, mpi-default-dev, libgtksourceview2.0-dev, libattr1-dev, liblzma-dev, libacl1-dev, libarchive-dev, libcurl4-gnutls-dev, nettle-dev, libssl-dev, openssl
+Build-Depends: debhelper (>= 8.0), cmake (>= 2.6), quilt, g++ (>= 4:3.2.2-0), devscripts, libgtkmm-2.4-dev, libglademm-2.4-dev, libboost-dev (>= 1.41), libboost-chrono-dev|libboost-dev (<< 1.49), libboost-date-time-dev, libboost-filesystem-dev, libboost-test-dev,  libboost-regex-dev, libboost-program-options-dev, libboost-thread-dev, mpi-default-dev, libgtksourceview2.0-dev, libarchive-dev
 Build-Depends-Indep: doxygen, graphviz 
 Standards-Version: 3.9.1
 Homepage: http://www.vle-project.org
@@ -49,7 +49,7 @@ Description: environment of modeling and simulation (runtimes files)
 Package: libvle-1.1-0-dev
 Section: libdevel
 Architecture: any
-Depends:  libvle-1.1-0 (= ${binary:Version}), libboost-dev (>= 1.41), libboost-chrono-dev|libboost-dev (<< 1.49), libboost-date-time-dev, libboost-filesystem-dev, libboost-test-dev,  libboost-regex-dev, libboost-program-options-dev, libboost-thread-dev, libboost-mpi-dev, libattr1-dev, liblzma-dev, libacl1-dev, libarchive-dev, libcurl4-gnutls-dev, nettle-dev, libssl-dev, openssl,${misc:Depends}
+Depends:  libvle-1.1-0 (= ${binary:Version}), libboost-dev (>= 1.41), libboost-chrono-dev|libboost-dev (<< 1.49), libboost-date-time-dev, libboost-filesystem-dev, libboost-test-dev,  libboost-regex-dev, libboost-program-options-dev, libboost-thread-dev, libboost-mpi-dev, libarchive-dev, ${misc:Depends}
 Description: environment of modeling and simulation (development files)
  VLE is a platform of modelling and simulation for complex systems
  .
@@ -58,7 +58,7 @@ Description: environment of modeling and simulation (development files)
 Package: libgvle-1.1-0-dev
 Section: libdevel
 Architecture: any
-Depends: libgvle-1.1-0 (= ${binary:Version}), libvle-1.1-0 (= ${binary:Version}), libgtkmm-2.4-dev, libglademm-2.4-dev, libboost-dev (>= 1.41), libboost-chrono-dev|libboost-dev (<< 1.49), libboost-date-time-dev, libboost-filesystem-dev, libboost-test-dev,  libboost-regex-dev, libboost-program-options-dev, libboost-thread-dev, libboost-mpi-dev, libattr1-dev, liblzma-dev, libacl1-dev, libarchive-dev, libcurl4-gnutls-dev, nettle-dev, libssl-dev, openssl, ${misc:Depends}
+Depends: libgvle-1.1-0 (= ${binary:Version}), libvle-1.1-0 (= ${binary:Version}), libgtkmm-2.4-dev, libglademm-2.4-dev, libboost-dev (>= 1.41), libboost-chrono-dev|libboost-dev (<< 1.49), libboost-date-time-dev, libboost-filesystem-dev, libboost-test-dev,  libboost-regex-dev, libboost-program-options-dev, libboost-thread-dev, libboost-mpi-dev, libarchive-dev, ${misc:Depends}
 Description: environment of modeling and simulation (development files)
  VLE is a platform of modelling and simulation for complex systems
  .
