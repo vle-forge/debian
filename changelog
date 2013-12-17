@@ -1,5 +1,5 @@
-vle (1.0.99+1.1.0beta4-0) UNRELEASED; urgency=low
+vle-1.1 (1.1.0~beta4-1) UNRELEASED; urgency=low
 
-  * Initial release. (Cloeses: #XXXXXX)
+  * Initial release. (Closes: #XXXXXX)
 
  -- Gauthier Quesnel <quesnel@users.sourceforge.net>  Wed, 11 Dec 2013 15:17:07 +0100

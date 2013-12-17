@@ -1,4 +1,4 @@
-Source: vle
+Source: vle-1.1
 Section: misc
 Priority: optional
 Maintainer: Gauthier Quesnel <quesnel@users.sourceforge.net>
@@ -9,7 +9,7 @@ Homepage: http://www.vle-project.org
 #Vcs-Git: git://git.debian.org/collab-maint/vle.git
 #Vcs-Browser: http://git.debian.org/?p=collab-maint/vle.git;a=summary
 
-Package: vle
+Package: vle-1.1
 Section: utils
 Architecture: any
 Depends:  ${shlibs:Depends}, ${misc:Depends}, libvle-1.1-0
@@ -18,7 +18,7 @@ Description: environment of modeling and simulation (executables files)
  .
  This package contains excutables files.
 
-Package: gvle
+Package: gvle-1.1
 Section: utils
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, libgvle-1.1-0
@@ -30,7 +30,7 @@ Description: environment of modeling and simulation (executables files)
 Package: libvle-1.1-0
 Section: libs
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libvle-1.1-0-data, pkg-config, cmake, libxml2-dev, libglibmm-2.4-dev, gcc, g++
+Depends: ${shlibs:Depends}, ${misc:Depends}, libvle-1.1-data, pkg-config, cmake, libxml2-dev, libglibmm-2.4-dev, gcc, g++
 Description: environment of modeling and simulation (runtimes files)
  VLE is a platform of modelling and simulation for complex systems.
  .
@@ -40,13 +40,13 @@ Description: environment of modeling and simulation (runtimes files)
 Package: libgvle-1.1-0
 Section: libs
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libvle-1.1-0, libvle-1.1-0-data
+Depends: ${shlibs:Depends}, ${misc:Depends}, libvle-1.1-0, libvle-1.1-data
 Description: environment of modeling and simulation (runtimes files)
  VLE is a platform of modelling and simulation for complex systems.
  .
  This package contains shared libraries.
 
-Package: libvle-1.1-0-dev
+Package: libvle-1.1-dev
 Section: libdevel
 Architecture: any
 Depends:  libvle-1.1-0 (= ${binary:Version}), libboost-dev (>= 1.41), libboost-chrono-dev|libboost-dev (<< 1.49), libboost-date-time-dev, libboost-filesystem-dev, libboost-test-dev,  libboost-regex-dev, libboost-program-options-dev, libboost-thread-dev, libboost-mpi-dev, libarchive-dev, ${misc:Depends}
@@ -55,7 +55,7 @@ Description: environment of modeling and simulation (development files)
  .
  This package contains shared libraries.
 
-Package: libgvle-1.1-0-dev
+Package: libgvle-1.1-dev
 Section: libdevel
 Architecture: any
 Depends: libgvle-1.1-0 (= ${binary:Version}), libvle-1.1-0 (= ${binary:Version}), libgtkmm-2.4-dev, libglademm-2.4-dev, libboost-dev (>= 1.41), libboost-chrono-dev|libboost-dev (<< 1.49), libboost-date-time-dev, libboost-filesystem-dev, libboost-test-dev,  libboost-regex-dev, libboost-program-options-dev, libboost-thread-dev, libboost-mpi-dev, libarchive-dev, ${misc:Depends}
@@ -64,7 +64,7 @@ Description: environment of modeling and simulation (development files)
  .
  This package contains shared libraries.
 
-Package: libvle-1.1-0-doc
+Package: libvle-1.1-doc
 Section: doc
 Architecture: all
 Depends: ${misc:Depends}
@@ -74,7 +74,7 @@ Description: environment of modeling and simulation (development files)
  This package contains documentation of shared libraries.
  
 
-Package: libgvle-1.1-0-doc
+Package: libgvle-1.1-doc
 Section: doc
 Architecture: all
 Depends: ${misc:Depends}
@@ -83,7 +83,7 @@ Description: environment of modeling and simulation (development files)
  .
  This package contains documentation of shared libraries.
 
-Package: libvle-1.1-0-data
+Package: libvle-1.1-data
 Section: utils
 Architecture: all
 Depends: ${misc:Depends}
