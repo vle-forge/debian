@@ -73,16 +73,6 @@ Description: environment of modeling and simulation (development files)
  .
  This package contains documentation of shared libraries.
  
-
-Package: libgvle-1.1-doc
-Section: doc
-Architecture: all
-Depends: ${misc:Depends}
-Description: environment of modeling and simulation (development files)
- VLE is a platform of modelling and simulation for complex systems
- .
- This package contains documentation of shared libraries.
-
 Package: libvle-1.1-data
 Section: utils
 Architecture: all
