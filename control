@@ -3,82 +3,132 @@ Section: misc
 Priority: optional
 Maintainer: Gauthier Quesnel <quesnel@users.sourceforge.net>
 Build-Depends: debhelper (>= 8.0), cmake (>= 2.6), quilt, g++ (>= 4:3.2.2-0), devscripts, libgtkmm-2.4-dev, libglademm-2.4-dev, libboost-dev (>= 1.41), libboost-chrono-dev|libboost-dev (<< 1.49), libboost-date-time-dev, libboost-filesystem-dev, libboost-test-dev,  libboost-regex-dev, libboost-program-options-dev, libboost-thread-dev, mpi-default-dev, libgtksourceview2.0-dev, libarchive-dev
-Build-Depends-Indep: doxygen, graphviz 
+Build-Depends-Indep: doxygen, graphviz
 Standards-Version: 3.9.1
 Homepage: http://www.vle-project.org
-#Vcs-Git: git://git.debian.org/collab-maint/vle.git
-#Vcs-Browser: http://git.debian.org/?p=collab-maint/vle.git;a=summary
+Vcs-Git: git://github.com/vle-forge/debian.git
+Vcs-Browser: https://github.com/vle-forge/debian.git
 
 Package: vle-1.1
 Section: utils
 Architecture: any
 Depends:  ${shlibs:Depends}, ${misc:Depends}, libvle-1.1-0
-Description: environment of modeling and simulation (executables files)
- VLE is a platform of modelling and simulation for complex systems.
+Description: Environment of modeling and simulation (executables files)
+ VLE is a multi-modeling and simulation platform. It is a powerful modeler and
+ a simulator supporting the use of different formalisms for the specification
+ of models and implementing the corresponding solvers in a unified manner.
+ In addition to the classical use of one single formalism for modeling and
+ simulation, VLE integrates, i.e. couples, heterogeneous formalisms in one
+ coherent simulation model. VLE supports the new generation of
+ inter-disciplinary simulation models
  .
- This package contains excutables files.
+ This package contains vle and mvle excutables files.
 
 Package: gvle-1.1
 Section: utils
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, libgvle-1.1-0
-Description: environment of modeling and simulation (executables files)
- VLE is a platform of modelling and simulation for complex systems.
+Description: Environment of modeling and simulation (executables files)
+ VLE is a multi-modeling and simulation platform. It is a powerful modeler and
+ a simulator supporting the use of different formalisms for the specification
+ of models and implementing the corresponding solvers in a unified manner.
+ In addition to the classical use of one single formalism for modeling and
+ simulation, VLE integrates, i.e. couples, heterogeneous formalisms in one
+ coherent simulation model. VLE supports the new generation of
+ inter-disciplinary simulation models
  .
- This package contains the gvle excutables files.
+ This package contains the gvle excutable file.
 
 Package: libvle-1.1-0
 Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, libvle-1.1-data, pkg-config, cmake, libxml2-dev, libglibmm-2.4-dev, gcc, g++
-Description: environment of modeling and simulation (runtimes files)
- VLE is a platform of modelling and simulation for complex systems.
+Description: Environment of modeling and simulation (runtimes files)
+ VLE is a multi-modeling and simulation platform. It is a powerful modeler and
+ a simulator supporting the use of different formalisms for the specification
+ of models and implementing the corresponding solvers in a unified manner.
+ In addition to the classical use of one single formalism for modeling and
+ simulation, VLE integrates, i.e. couples, heterogeneous formalisms in one
+ coherent simulation model. VLE supports the new generation of
+ inter-disciplinary simulation models
  .
- This package contains shared libraries.
- 
+ This package contains the shared library of VLE.
 
 Package: libgvle-1.1-0
 Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, libvle-1.1-0, libvle-1.1-data
-Description: environment of modeling and simulation (runtimes files)
- VLE is a platform of modelling and simulation for complex systems.
+Description: Environment of modeling and simulation (runtimes files)
+ VLE is a multi-modeling and simulation platform. It is a powerful modeler and
+ a simulator supporting the use of different formalisms for the specification
+ of models and implementing the corresponding solvers in a unified manner.
+ In addition to the classical use of one single formalism for modeling and
+ simulation, VLE integrates, i.e. couples, heterogeneous formalisms in one
+ coherent simulation model. VLE supports the new generation of
+ inter-disciplinary simulation models
  .
- This package contains shared libraries.
+ This package contains the shared library of GVLE.
 
 Package: libvle-1.1-dev
 Section: libdevel
 Architecture: any
 Depends:  libvle-1.1-0 (= ${binary:Version}), libboost-dev (>= 1.41), libboost-chrono-dev|libboost-dev (<< 1.49), libboost-date-time-dev, libboost-filesystem-dev, libboost-test-dev,  libboost-regex-dev, libboost-program-options-dev, libboost-thread-dev, libboost-mpi-dev, libarchive-dev, ${misc:Depends}
-Description: environment of modeling and simulation (development files)
- VLE is a platform of modelling and simulation for complex systems
+Description: Environment of modeling and simulation (development files)
+ VLE is a multi-modeling and simulation platform. It is a powerful modeler and
+ a simulator supporting the use of different formalisms for the specification
+ of models and implementing the corresponding solvers in a unified manner.
+ In addition to the classical use of one single formalism for modeling and
+ simulation, VLE integrates, i.e. couples, heterogeneous formalisms in one
+ coherent simulation model. VLE supports the new generation of
+ inter-disciplinary simulation models
  .
- This package contains shared libraries.
+ This package contains the header and development files which are
+ needed for building VLE applications and modules.
 
 Package: libgvle-1.1-dev
 Section: libdevel
 Architecture: any
 Depends: libgvle-1.1-0 (= ${binary:Version}), libvle-1.1-0 (= ${binary:Version}), libgtkmm-2.4-dev, libglademm-2.4-dev, libboost-dev (>= 1.41), libboost-chrono-dev|libboost-dev (<< 1.49), libboost-date-time-dev, libboost-filesystem-dev, libboost-test-dev,  libboost-regex-dev, libboost-program-options-dev, libboost-thread-dev, libboost-mpi-dev, libarchive-dev, ${misc:Depends}
-Description: environment of modeling and simulation (development files)
- VLE is a platform of modelling and simulation for complex systems
+Description: Environment of modeling and simulation (development files)
+ VLE is a multi-modeling and simulation platform. It is a powerful modeler and
+ a simulator supporting the use of different formalisms for the specification
+ of models and implementing the corresponding solvers in a unified manner.
+ In addition to the classical use of one single formalism for modeling and
+ simulation, VLE integrates, i.e. couples, heterogeneous formalisms in one
+ coherent simulation model. VLE supports the new generation of
+ inter-disciplinary simulation models
  .
- This package contains shared libraries.
+ This package contains the header and development files which are
+ needed for building GVLE applications and modules.
 
 Package: libvle-1.1-doc
 Section: doc
 Architecture: all
 Depends: ${misc:Depends}
-Description: environment of modeling and simulation (development files)
- VLE is a platform of modelling and simulation for complex systems
+Description: Environment of modeling and simulation (documentation)
+ VLE is a multi-modeling and simulation platform. It is a powerful modeler and
+ a simulator supporting the use of different formalisms for the specification
+ of models and implementing the corresponding solvers in a unified manner.
+ In addition to the classical use of one single formalism for modeling and
+ simulation, VLE integrates, i.e. couples, heterogeneous formalisms in one
+ coherent simulation model. VLE supports the new generation of
+ inter-disciplinary simulation models
  .
- This package contains documentation of shared libraries.
- 
+ This package contains the HTML documentation for the libraries
+ in /usr/share/vle-1.1/doc
+
 Package: libvle-1.1-data
 Section: utils
 Architecture: all
 Depends: ${misc:Depends}
-Description: environment of modeling and simulation (runtimes files)
- VLE is a platform of modelling and simulation for complex systems.
+Description: Environment of modeling and simulation (common files)
+ VLE is a multi-modeling and simulation platform. It is a powerful modeler and
+ a simulator supporting the use of different formalisms for the specification
+ of models and implementing the corresponding solvers in a unified manner.
+ In addition to the classical use of one single formalism for modeling and
+ simulation, VLE integrates, i.e. couples, heterogeneous formalisms in one
+ coherent simulation model. VLE supports the new generation of
+ inter-disciplinary simulation models
  .
- This package contains shared libraries.
+ This package contains the common files which the libraries need.
 
