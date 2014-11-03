@@ -2,6 +2,7 @@ vle-1.1 (1.1.2-1) unstable; urgency=low
 
   * New upstream release
   * Update patch (simplify-doxygen.diff)
+  * Remove libglademm-2.4-dev in the build dependency list
 
  -- Gauthier Quesnel <gauthier.quesnel@toulouse.inra.fr>  Mon, 03 Nov 2014 13:58:43 +0100
 
