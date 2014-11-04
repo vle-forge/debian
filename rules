@@ -16,8 +16,6 @@
 
 export DEB_BUILD_HARDENING := 1
 
-include /usr/share/quilt/quilt.make
-
 export CFLAGS := $(shell dpkg-buildflags --get CFLAGS) $(shell dpkg-buildflags --get CPPFLAGS)
 export CXXFLAGS := $(shell dpkg-buildflags --get CXXFLAGS) $(shell dpkg-buildflags --get CPPFLAGS)
 export LDFLAGS := $(shell dpkg-buildflags --get LDFLAGS) $(shell dpkg-buildflags --get CPPFLAGS)
