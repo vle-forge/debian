@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Gauthier Quesnel <quesnel@users.sourceforge.net>
 Build-Depends: debhelper (>= 9), cmake (>= 2.6), g++ (>= 4:3.2.2-0), devscripts, libgtkmm-2.4-dev, libboost-dev (>= 1.41), libboost-chrono-dev|libboost-dev (<< 1.49), libboost-date-time-dev, libboost-filesystem-dev, libboost-test-dev,  libboost-regex-dev, libboost-program-options-dev, libboost-thread-dev, mpi-default-dev, libgtksourceview2.0-dev, libarchive-dev
 Build-Depends-Indep: doxygen, graphviz
-Standards-Version: 3.9.1
+Standards-Version: 3.9.4
 Homepage: http://www.vle-project.org
 Vcs-Git: git://github.com/vle-forge/debian.git
 Vcs-Browser: https://github.com/vle-forge/debian.git
